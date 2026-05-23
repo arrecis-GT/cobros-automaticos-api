@@ -1,0 +1,6 @@
+@CobrosAutomaticosApi_HostAddress = http://localhost:5083
+
+GET {{CobrosAutomaticosApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
