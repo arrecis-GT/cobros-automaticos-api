@@ -2,18 +2,18 @@
 {
     public class Sesion
     {
-        public int SesionId { get; set; }
+        public int SesionId { get; init; }
 
-        public int UsuarioId { get; set; }
+        public int UsuarioId { get; init; }
 
-        public string Token { get; set; } = string.Empty;
+        public string Token { get; init; } = string.Empty;
 
-        public DateOnly FechaCreacion { get; set; }
+        public DateOnly FechaCreacion { get; init; }
 
-        public TimeOnly HoraCreacion { get; set; }
+        public TimeOnly HoraCreacion { get; init; }
 
-        public TimeOnly UltimaConexion { get; set; }
+        public TimeOnly UltimaConexion { get; init; }
 
-        public char Status { get; set; } = 'A';
+        public char Status { get; init; } = 'A';
     }
 }

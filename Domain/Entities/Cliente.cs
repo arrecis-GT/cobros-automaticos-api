@@ -2,16 +2,16 @@
 {
     public class Cliente
     {
-        public int Clinha { get; set; }
+        public int Clinha { get; init; }
 
-        public string Dpi { get; set; } = string.Empty;
+        public string Dpi { get; init; } = string.Empty;
 
-        public string Nombre { get; set; } = string.Empty;
+        public string Nombre { get; init; } = string.Empty;
 
-        public string Email { get; set; } = string.Empty;
+        public string Email { get; init; } = string.Empty;
 
-        public string Telefono { get; set; } = string.Empty;
+        public string Telefono { get; init; } = string.Empty;
 
-        public char Status { get; set; } = 'A';
+        public char Status { get; init; } = 'A';
     }
 }

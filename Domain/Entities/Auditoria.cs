@@ -2,20 +2,20 @@
 {
     public class Auditoria
     {
-        public int AuditoriaId { get; set; }
+        public int AuditoriaId { get; init; }
 
-        public int UsuarioId { get; set; }
+        public int UsuarioId { get; init; }
 
-        public string Evento { get; set; } = string.Empty;
+        public string Evento { get; init; } = string.Empty;
 
-        public string EstadoEvento { get; set; } = string.Empty;
+        public string EstadoEvento { get; init; } = string.Empty;
 
-        public string ResumenPayload { get; set; } = string.Empty;
+        public string ResumenPayload { get; init; } = string.Empty;
 
-        public DateOnly FechaCreacion { get; set; }
+        public DateOnly FechaCreacion { get; init; }
 
-        public TimeOnly HoraCreacion { get; set; }
+        public TimeOnly HoraCreacion { get; init; }
 
-        public char Status { get; set; } = 'A';
+        public char Status { get; init; } = 'A';
     }
 }
