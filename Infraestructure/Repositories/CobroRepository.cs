@@ -112,6 +112,43 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
             return (bool)outputParam.Value;
         }
 
+
+        public async Task<int> ProcesarCobroLote(int UsuarioId, int[] CobroIds)
+        {
+
+            var ListaCobros = new DataTable();
+            ListaCobros.Columns.Add("cobro_id", typeof(int));
+
+            // 2. Llenamos la tabla con los IDs de nuestra lista
+            foreach (var id in CobroIds)
+            {
+                ListaCobros.Rows.Add(id);
+            }
+
+            using var connection = await _db.GetConnectionAsync();
+            using var command = new SqlCommand("SP_ProcesarCobroLote", connection);
+            command.CommandType = CommandType.StoredProcedure;
+
+            var tvpParam = new SqlParameter("@LoteCobros", SqlDbType.Structured)
+            {
+                Value = ListaCobros,
+                TypeName = "ListaCobros"
+            };
+            command.Parameters.Add(tvpParam);
+
+            // Agregamos el resto de los parámetros
+            command.Parameters.Add(new SqlParameter("@UsuarioId", SqlDbType.Int) { Value = UsuarioId });
+            command.Parameters.Add(new SqlParameter("@Payload", SqlDbType.NVarChar) { Value = string.Join(",", CobroIds) });
+
+            var outputParam = new SqlParameter("@Resultado", SqlDbType.Int) { Direction = ParameterDirection.Output };
+            command.Parameters.Add(outputParam);
+
+            var result = await command.ExecuteNonQueryAsync();
+
+            return (int)outputParam.Value;
+        }
+
+
     }
 }
 
