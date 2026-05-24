@@ -25,7 +25,7 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
             if (response.StatusCode == 401)
             {
                 response.Message = "Usuario o contraseña incorrecto";
-                return Unauthorized(response);
+                return StatusCode(response.StatusCode, response);
             }
 
             response.Message = "Login exitoso";

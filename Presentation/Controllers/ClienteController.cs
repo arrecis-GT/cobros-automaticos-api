@@ -29,7 +29,8 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
 
             if (findClient)
             {
-                return BadRequest(new BaseResponse
+
+                return StatusCode(400, new BaseResponse
                 {
                     StatusCode = 400,
                     Message = "Error, el cliente ya existe"
@@ -42,7 +43,7 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
             if (response.StatusCode != 200)
             {
                 response.Message = "Error al crear el cliente";
-                return BadRequest(response);
+                return StatusCode(response.StatusCode, response);
             }
 
             response.Message = "Cliente creado exitosamente";
@@ -58,7 +59,7 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
             if (response.StatusCode != 200)
             {
                 response.Message = "No se encontraron cobros para el cliente";
-                return BadRequest(response);
+                return StatusCode(response.StatusCode, response);
             }
 
             response.Message = "Cobros listados exitosamente";
