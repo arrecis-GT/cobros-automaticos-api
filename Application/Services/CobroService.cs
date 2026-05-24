@@ -31,9 +31,9 @@ namespace CobrosAutomaticosApi.Application.Services
 
         }
 
-        public async Task<ListarCobroResponse> ListarCobros(int ClienteId)
+        public async Task<ListarCobroResponse> ListarCobros(int ClienteId, DateOnly? FechaInicio = null, DateOnly? FechaFin = null)
         {
-            var result = await _repository.ListarCobros(ClienteId);
+            var result = await _repository.ListarCobros(ClienteId, FechaInicio, FechaFin);
 
             if (result.Count == 0)
             {

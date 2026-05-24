@@ -43,13 +43,16 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
 
         }
 
-        public async Task<List<Cobro>> ListarCobros(int ClienteId)
+        public async Task<List<Cobro>> ListarCobros(int ClienteId, DateOnly? FechaInicio = null, DateOnly? FechaFin = null)
         {
             using var connection = await _db.GetConnectionAsync();
 
             const string query = @";
             BEGIN TRY
-                SELECT * FROM Cobro WHERE cliente_id = @ClienteId;
+                SELECT * FROM Cobro 
+                WHERE cliente_id = @ClienteId
+                AND (@FechaInicio IS NULL OR CAST(fecha_creacion AS DATE) >= @FechaInicio)
+                AND (@FechaFin IS NULL OR CAST(fecha_creacion AS DATE) <= @FechaFin)
             END TRY
             BEGIN CATCH
                 THROW;
@@ -58,6 +61,8 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
 
             using var command = new SqlCommand(query, connection);
             command.Parameters.Add(new SqlParameter("@ClienteId", SqlDbType.Int) { Value = ClienteId });
+            command.Parameters.Add(new SqlParameter("@FechaInicio", SqlDbType.Date) { Value = (object?)FechaInicio ?? DBNull.Value });
+            command.Parameters.Add(new SqlParameter("@FechaFin", SqlDbType.Date) { Value = (object?)FechaFin ?? DBNull.Value });
 
             var reader = await command.ExecuteReaderAsync();
             var cobros = new List<Cobro>();

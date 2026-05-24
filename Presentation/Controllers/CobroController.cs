@@ -35,9 +35,9 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
 
 
         [HttpGet("ListarCobros/{ClienteId}")]
-        public async Task<IActionResult> ListarCobros([FromRoute] int ClienteId)
+        public async Task<IActionResult> ListarCobros([FromRoute] int ClienteId, [FromQuery] DateOnly? FechaInicio = null, [FromQuery] DateOnly? FechaFin = null)
         {
-            var response = await cobroService.ListarCobros(ClienteId);
+            var response = await cobroService.ListarCobros(ClienteId, FechaInicio, FechaFin);
 
             if (response.StatusCode != 200)
             {
