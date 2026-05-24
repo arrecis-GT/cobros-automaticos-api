@@ -95,15 +95,21 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
 
             using var connection = await _db.GetConnectionAsync();
             using var command = new SqlCommand("SP_ProcesarCobroIndividual", connection);
+            command.CommandType = CommandType.StoredProcedure;
 
             command.Parameters.Add(new SqlParameter("@UsuarioId", SqlDbType.Int) { Value = UsuarioId });
             command.Parameters.Add(new SqlParameter("@CobroId", SqlDbType.Int) { Value = CobroId });
             command.Parameters.Add(new SqlParameter("@Payload", SqlDbType.NVarChar) { Value = payload });
 
-            var rowsAffected = await command.ExecuteNonQueryAsync();
+            var outputParam = new SqlParameter("@Resultado", SqlDbType.Bit)
+            {
+                Direction = ParameterDirection.Output
+            };
+            command.Parameters.Add(outputParam);
 
-            return rowsAffected > 0 ? true : false;
+            await command.ExecuteNonQueryAsync();
 
+            return (bool)outputParam.Value;
         }
 
     }

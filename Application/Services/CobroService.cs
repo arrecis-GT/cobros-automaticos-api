@@ -18,9 +18,9 @@ namespace CobrosAutomaticosApi.Application.Services
 
             if (!result)
             {
-                new BaseResponse
+                return new BaseResponse
                 {
-                    StatusCode = 500
+                    StatusCode = 409
                 };
             }
 
@@ -47,6 +47,24 @@ namespace CobrosAutomaticosApi.Application.Services
             {
                 StatusCode = 200,
                 Cobros = result
+            };
+        }
+
+        public async Task<BaseResponse> ProcesarCobroIndividual(ProcesarCobroIndividualRequest request)
+        {
+            var result = await _repository.ProcesarCobroIndividual(request.UsuarioId, request.CobroId);
+
+            if (!result)
+            {
+                return new BaseResponse
+                {
+                    StatusCode = 409
+                };
+            }
+
+            return new BaseResponse
+            {
+                StatusCode = 200
             };
         }
     }
