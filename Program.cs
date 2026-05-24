@@ -13,10 +13,12 @@ builder.Services.AddSingleton<ConnexionDB>();
 // Repositories
 builder.Services.AddScoped<AuthenticationRepository>();
 builder.Services.AddScoped<CobroRepository>();
+builder.Services.AddScoped<ClienteRespository>();
 
 // Services
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ICobroService, CobroService>();
+builder.Services.AddScoped<IClientService, ClientService>();
 
 
 builder.Services.AddControllers();
