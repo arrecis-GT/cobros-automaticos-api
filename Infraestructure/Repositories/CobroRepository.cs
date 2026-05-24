@@ -88,7 +88,23 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
         }
 
 
+        public async Task<bool> ProcesarCobroIndividual(int UsuarioId, int CobroId)
+        {
 
+            string payload = $"{{{CobroId}}}";
+
+            using var connection = await _db.GetConnectionAsync();
+            using var command = new SqlCommand("SP_ProcesarCobroIndividual", connection);
+
+            command.Parameters.Add(new SqlParameter("@UsuarioId", SqlDbType.Int) { Value = UsuarioId });
+            command.Parameters.Add(new SqlParameter("@CobroId", SqlDbType.Int) { Value = CobroId });
+            command.Parameters.Add(new SqlParameter("@Payload", SqlDbType.Int) { Value = payload });
+
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0 ? true : false;
+
+        }
 
     }
 }
