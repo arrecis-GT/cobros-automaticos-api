@@ -12,9 +12,12 @@ builder.Services.AddSingleton<ConnexionDB>();
 
 // Repositories
 builder.Services.AddScoped<AuthenticationRepository>();
+builder.Services.AddScoped<CobroRepository>();
 
 // Services
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<ICobroService, CobroService>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
