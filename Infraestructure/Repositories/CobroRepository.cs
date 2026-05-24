@@ -98,7 +98,7 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
 
             command.Parameters.Add(new SqlParameter("@UsuarioId", SqlDbType.Int) { Value = UsuarioId });
             command.Parameters.Add(new SqlParameter("@CobroId", SqlDbType.Int) { Value = CobroId });
-            command.Parameters.Add(new SqlParameter("@Payload", SqlDbType.Int) { Value = payload });
+            command.Parameters.Add(new SqlParameter("@Payload", SqlDbType.NVarChar) { Value = payload });
 
             var rowsAffected = await command.ExecuteNonQueryAsync();
 
