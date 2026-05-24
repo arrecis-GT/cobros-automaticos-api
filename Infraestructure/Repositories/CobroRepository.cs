@@ -24,7 +24,7 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
                 INSERT INTO Cobro
                 (cliente_id, monto, moneda, estado, fecha_creacion, fecha_proceso, hora_proceso, referencia_externa, status)
                 VALUES
-                (@ClienteId, @Monto, @Moneda, 'PENDIENTE', GETUTCDATE(), '1900-01-01', '00:00:00', @ReferenciaExterna, 'A');
+                (@ClienteId, @Monto, @Moneda, 'PENDIENTE', GETDATE(), '1900-01-01', '00:00:00', @ReferenciaExterna, 'A');
             END TRY
             BEGIN CATCH
                 THROW;
@@ -86,6 +86,9 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
 
             return cobros;
         }
+
+
+
 
     }
 }
