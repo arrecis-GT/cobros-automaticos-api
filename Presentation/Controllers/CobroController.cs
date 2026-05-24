@@ -41,13 +41,29 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
 
             if (response.StatusCode != 200)
             {
-                response.Message = "Cobro fallido";
+                response.Message = "Cobro individual fallido";
                 return StatusCode(response.StatusCode, response);
             }
 
-            response.Message = "Cobro procesado exitosamente";
+            response.Message = "Cobro individual procesado exitosamente";
             return Ok(response);
         }
+
+        [HttpPost("lote/procesar")]
+        public async Task<IActionResult> ProcesarCobroLote(ProcesarCobroLotesRequest Request)
+        {
+            var response = await cobroService.ProcesarCobroLote(Request);
+
+            if (response.StatusCode != 200)
+            {
+                response.Message = "Cobro lote sin cambios de estado";
+                return StatusCode(response.StatusCode, response);
+            }
+
+            response.Message = "Cobro lote procesado exitosamente";
+            return Ok(response);
+        }
+
 
     }
 }

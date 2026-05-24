@@ -2,6 +2,6 @@
 {
     public record ProcesarCobroLoteResponse: BaseResponse
     {
-        public int CobrosProcesados { get; init; }
+        public int CobrosProcesados { get; init; } = 0;
     }
 }

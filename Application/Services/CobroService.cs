@@ -67,5 +67,25 @@ namespace CobrosAutomaticosApi.Application.Services
                 StatusCode = 200
             };
         }
+
+        public async Task<ProcesarCobroLoteResponse> ProcesarCobroLote(ProcesarCobroLotesRequest request)
+        {
+            var result = await _repository.ProcesarCobroLote(request.UsuarioId, request.CobroIds);
+            
+            if (result == 0)
+            {
+                return new ProcesarCobroLoteResponse
+                {
+                    StatusCode = 207
+                };
+            }
+            return new ProcesarCobroLoteResponse
+            {
+                StatusCode = 200,
+                CobrosProcesados = result
+            };
+        }
+
+
     }
 }

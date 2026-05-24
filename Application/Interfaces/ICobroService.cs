@@ -8,6 +8,7 @@ namespace CobrosAutomaticosApi.Application.Interfaces
         Task<BaseResponse> CrearCobro(CreateCobroRequest request);
         Task<ListarCobroResponse> ListarCobros(int ClienteId, DateOnly? FechaInicio = null, DateOnly? FechaFin = null);
         Task<BaseResponse> ProcesarCobroIndividual(ProcesarCobroIndividualRequest request);
+        Task<ProcesarCobroLoteResponse> ProcesarCobroLote(ProcesarCobroLotesRequest request);
 
     }
 }
