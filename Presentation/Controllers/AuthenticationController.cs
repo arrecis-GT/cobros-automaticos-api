@@ -22,11 +22,13 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
         {
             var response = await _AuthService.LogIn(Request);
 
-            if (response.StatusCode != 200)
+            if (response.StatusCode == 401)
             {
-                return NotFound(response);
+                response.Message = "Usuario o contraseña incorrecto";
+                return Unauthorized(response);
             }
 
+            response.Message = "Login exitoso";
             return Ok(response);
         }
 

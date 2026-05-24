@@ -3,5 +3,7 @@
     public record BaseResponse
     {
         public int StatusCode { get; init; }
+
+        public string? Message { get; set; } = string.Empty;
     }
 }
