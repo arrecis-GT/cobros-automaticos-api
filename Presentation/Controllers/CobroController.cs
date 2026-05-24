@@ -31,23 +31,7 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
 
             response.Message = "Cobro creado exitosamente";
             return Ok(response);
-        }
-
-
-        [HttpGet("ListarCobros/{ClienteId}")]
-        public async Task<IActionResult> ListarCobros([FromRoute] int ClienteId, [FromQuery] DateOnly? FechaInicio = null, [FromQuery] DateOnly? FechaFin = null)
-        {
-            var response = await cobroService.ListarCobros(ClienteId, FechaInicio, FechaFin);
-
-            if (response.StatusCode != 200)
-            {
-                response.Message = "No se encontraron cobros para el cliente";
-                return BadRequest(response);
-            }
-
-            response.Message = "Cobros listados exitosamente";
-            return Ok(response);
-        }       
+        } 
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CobrosAutomaticosApi.Application.DTOs;
 using CobrosAutomaticosApi.Application.Interfaces;
 using CobrosAutomaticosApi.Application.Services;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,10 +13,12 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
     {
 
         private readonly IClientService clientService;
+        private readonly ICobroService cobroService;
 
-        public ClienteController(IClientService clientService)
+        public ClienteController(IClientService clientService, ICobroService cobroService)
         {
             this.clientService = clientService;
+            this.cobroService = cobroService;
         }
 
 
@@ -43,6 +46,22 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
             }
 
             response.Message = "Cliente creado exitosamente";
+            return Ok(response);
+        }
+
+
+        [HttpGet("{ClienteId}/cobros")]
+        public async Task<IActionResult> ListarCobros([FromRoute] int ClienteId, [FromQuery] DateOnly? FechaInicio = null, [FromQuery] DateOnly? FechaFin = null)
+        {
+            var response = await cobroService.ListarCobros(ClienteId, FechaInicio, FechaFin);
+
+            if (response.StatusCode != 200)
+            {
+                response.Message = "No se encontraron cobros para el cliente";
+                return BadRequest(response);
+            }
+
+            response.Message = "Cobros listados exitosamente";
             return Ok(response);
         }
 
