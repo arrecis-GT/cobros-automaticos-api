@@ -1,9 +1,11 @@
 ﻿using CobrosAutomaticosApi.Application.DTOs;
+using CobrosAutomaticosApi.Domain.Entities;
 
 namespace CobrosAutomaticosApi.Application.Interfaces
 {
     public interface ICobroService
     {
-        Task<BaseResponse> CreateCobro(CreateCobroRequest request);
+        Task<BaseResponse> CrearCobro(CreateCobroRequest request);
+        Task<ListarCobroResponse> ListarCobros(int ClienteId);
     }
 }

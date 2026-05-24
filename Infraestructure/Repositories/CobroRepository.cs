@@ -15,16 +15,16 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
             _db = db;
         }
 
-        public async Task<bool> CreateCobro(int ClienteId, decimal Monto, string Moneda, string ReferenciaExterna)
+        public async Task<bool> CrearCobro(int ClienteId, decimal Monto, string Moneda, string ReferenciaExterna)
         {
             using var connection = await _db.GetConnectionAsync();
 
             const string query = @";
             BEGIN TRY
                 INSERT INTO Cobro
-                (cliente_id, monto, moneda, estado, fecha_creacion, referencia_externa, status)
+                (cliente_id, monto, moneda, estado, fecha_creacion, fecha_proceso, hora_proceso, referencia_externa, status)
                 VALUES
-                (@ClienteId, @Monto, @Moneda, 'PENDIENTE', GETUTCDATE(), @ReferenciaExterna, 'A');
+                (@ClienteId, @Monto, @Moneda, 'PENDIENTE', GETUTCDATE(), '1900-01-01', '00:00:00', @ReferenciaExterna, 'A');
             END TRY
             BEGIN CATCH
                 THROW;
@@ -43,5 +43,45 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
 
         }
 
+        public async Task<List<Cobro>> ListarCobros(int ClienteId)
+        {
+            using var connection = await _db.GetConnectionAsync();
+
+            const string query = @";
+            BEGIN TRY
+                SELECT * FROM Cobro WHERE cliente_id = @ClienteId;
+            END TRY
+            BEGIN CATCH
+                THROW;
+            END CATCH";
+
+
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.Add(new SqlParameter("@ClienteId", SqlDbType.Int) { Value = ClienteId });
+
+            var reader = await command.ExecuteReaderAsync();
+            var cobros = new List<Cobro>();
+
+            while (await reader.ReadAsync())
+            {
+                cobros.Add(new Cobro
+                {
+                    CobroId = reader.GetInt32("cobro_id"),
+                    ClienteId = reader.GetInt32("cliente_id"),
+                    Monto = reader.GetDecimal("monto"),
+                    Moneda = reader.GetString("moneda"),
+                    Estado = reader.GetString("estado"),
+                    FechaCreacion = DateOnly.FromDateTime(reader.GetDateTime("fecha_creacion")),
+                    FechaProceso = reader.GetDateTime("fecha_proceso") != DateTime.MinValue ? DateOnly.FromDateTime(reader.GetDateTime("fecha_proceso")) : null,
+                    HoraProceso = reader["hora_proceso"] != DBNull.Value? TimeOnly.FromTimeSpan((TimeSpan)reader["hora_proceso"]): null,
+                    ReferenciaExterna = reader.GetString("referencia_externa"),
+                    Status = Convert.ToChar(reader["status"])
+                }); 
+            }
+
+            return cobros;
+        }
+
     }
 }
+

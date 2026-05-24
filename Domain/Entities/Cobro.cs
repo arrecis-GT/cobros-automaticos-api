@@ -12,11 +12,11 @@
 
         public string Estado { get; init; } = String.Empty;
 
-        public DateTime FechaCreacion { get; init; }
+        public DateOnly FechaCreacion { get; init; }
 
-        public DateTime FechaProceso { get; init; }
+        public DateOnly? FechaProceso { get; init; }
 
-        public TimeOnly HoraProceso { get; init; }
+        public TimeOnly? HoraProceso { get; init; }
 
         public string ReferenciaExterna { get; init; } = String.Empty;
 

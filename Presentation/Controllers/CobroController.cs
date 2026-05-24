@@ -19,9 +19,9 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
 
 
         [HttpPost("CrearCobro")]
-        public async Task<IActionResult> CreateCobro(CreateCobroRequest Request)
+        public async Task<IActionResult> CrearCobro(CreateCobroRequest Request)
         {
-            var response = await cobroService.CreateCobro(Request);
+            var response = await cobroService.CrearCobro(Request);
 
             if (response.StatusCode != 200)
             {
@@ -32,6 +32,22 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
             response.Message = "Cobro creado exitosamente";
             return Ok(response);
         }
+
+
+        [HttpGet("ListarCobros/{ClienteId}")]
+        public async Task<IActionResult> ListarCobros([FromRoute] int ClienteId)
+        {
+            var response = await cobroService.ListarCobros(ClienteId);
+
+            if (response.StatusCode != 200)
+            {
+                response.Message = "No se encontraron cobros para el cliente";
+                return BadRequest(response);
+            }
+
+            response.Message = "Cobros listados exitosamente";
+            return Ok(response);
+        }       
 
     }
 }
