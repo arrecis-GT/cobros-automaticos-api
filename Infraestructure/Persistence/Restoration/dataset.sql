@@ -24,15 +24,13 @@ INSERT INTO Cobro (cliente_id, monto, moneda, estado, fecha_creacion, fecha_proc
 VALUES 
     (1, 500.50,  'QTZ', 'PROCESADO', '2026-05-20', '2026-05-22', '22:00:00', 'QTZ-2034', 'A'),
     (1, 350.00,  'USD', 'PROCESADO', '2026-05-22', '2026-05-22', '22:05:00', 'USD-102', 'A'),
-    (1, 999.99,  'QTZ', 'FALLIDO',   '2026-05-22', '2026-05-22', '22:45:00', 'QTZ-2035', 'A'),
-    (2, 4800.00, 'USD', 'FALLIDO',   '2026-05-19', '2026-05-22', '22:45:00', 'USD-103', 'A'),
-    (2, 1001.00, 'QTZ', 'PENDIENTE', '2026-05-22', '1900-01-01', '00:00:00', 'QTZ-2036', 'A');
+    (1, 999.99,  'QTZ', 'PENDIENTE',   '2026-05-22', '2026-05-22', '22:45:00', 'QTZ-2035', 'A'),
+    (2, 4800.00, 'USD', 'PENDIENTE',   '2026-05-19', '2026-05-22', '22:45:00', 'USD-103', 'A');
 GO
 
-INSERT INTO Auditoria (usuario_id, evento, estado_evento, resumen_payload, fecha_creacion, hora_creacion, status)
+INSERT INTO Auditoria (usuario_id, evento, resultado_evento, resumen_payload, fecha_creacion, hora_creacion, status)
 VALUES 
-    (1, 'REGI-220526-5', 'EXITOSO', '{"id": 5}', '2026-05-22', '12:10:00', 'A'),
-    (1, 'INDI-220526-1', 'EXITOSO', '{"id": 1},', '2026-05-22', '22:00:00', 'A'),
-    (1, 'INDI-220526-2', 'EXITOSO', '{"id": 2}', '2026-05-22', '22:05:00', 'A'),
-    (1, 'LOTE-220526-1', 'FALLIDO', '{"id": 3},{"id": 4}', '2026-05-22', '22:45:00', 'A');
+    (1, 'COBRO INDIVIDUAL', '1,', '2026-05-22', '22:00:00', 'A'),
+    (1, 'COBRO INDIVIDUAL', '2', '2026-05-22', '22:05:00', 'A'),
+    (1, 'COBRO LOTE', '3,4', '2026-05-22', '22:45:00', 'A');
 GO

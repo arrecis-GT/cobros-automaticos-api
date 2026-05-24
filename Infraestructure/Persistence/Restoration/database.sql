@@ -26,7 +26,6 @@ CREATE TABLE Auditoria (
     auditoria_id INT IDENTITY(1,1) PRIMARY KEY,
     usuario_id INT NOT NULL,
     evento NVARCHAR(255) NOT NULL,
-    estado_evento NVARCHAR (255) NOT NULL,
     resumen_payload NVARCHAR(MAX) NOT NULL,
     fecha_creacion DATE NOT NULL,
     hora_creacion TIME(0) NOT NULL,
