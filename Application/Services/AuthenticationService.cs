@@ -38,6 +38,7 @@ namespace CobrosAutomaticosApi.Application.Services
         public async Task<LoginResponse> LogIn(LoginRequest Request)
         {
 
+            // Se valida inicialmente si el username existe
             var UserFind = await _repository.GetUserByUserName(Request.UserName);
 
             if (UserFind == null)
@@ -49,6 +50,7 @@ namespace CobrosAutomaticosApi.Application.Services
             }
 
 
+            // Si el usuario existe, se valida la contraseña encriptada con BCrypt
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(Request.Password, UserFind.Password);
 
             if (!isPasswordValid)
@@ -59,13 +61,26 @@ namespace CobrosAutomaticosApi.Application.Services
                 };
             }
 
-            // To Do: Falta agregar funcionalidad de la sesión del usuario.
+            // Se valida si el usuario tiene una sesión activa
+            var activeSession = await _repository.CheckExistSession(Request.UserName);
+
+            if(activeSession == null)
+            {
+                // Generar sesion activa
+
+                return new LoginResponse
+                {
+                    UserName = UserFind.UserName,
+                    Token = GenerarJwt(UserFind.UserName),
+                    StatusCode = 200,
+                };
+
+            }
 
             return new LoginResponse
             {
                 UserName = UserFind.UserName,
-                Token = GenerarJwt(UserFind.UserName),
-                StatusCode = 200,
+                StatusCode = 302,
             };
         }   
 
