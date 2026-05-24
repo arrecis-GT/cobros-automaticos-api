@@ -26,7 +26,7 @@ VALUES
     (1, 350.00,  'USD', 'PROCESADO', '2026-05-22', '2026-05-22', '22:05:00', 'USD-102', 'A'),
     (1, 999.99,  'QTZ', 'FALLIDO',   '2026-05-22', '2026-05-22', '22:45:00', 'QTZ-2035', 'A'),
     (2, 4800.00, 'USD', 'FALLIDO',   '2026-05-19', '2026-05-22', '22:45:00', 'USD-103', 'A'),
-    (2, 1001.00, 'QTZ', 'PENDIENTE', '2026-05-22', '', '', 'QTZ-2036', 'A');
+    (2, 1001.00, 'QTZ', 'PENDIENTE', '2026-05-22', '1900-01-01', '00:00:00', 'QTZ-2036', 'A');
 GO
 
 INSERT INTO Auditoria (usuario_id, evento, estado_evento, resumen_payload, fecha_creacion, hora_creacion, status)
