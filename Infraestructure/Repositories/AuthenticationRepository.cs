@@ -1,5 +1,4 @@
-﻿using CobrosAutomaticosApi.Application.Interfaces;
-using CobrosAutomaticosApi.Domain.Entities;
+﻿using CobrosAutomaticosApi.Domain.Entities;
 using CobrosAutomaticosApi.Infraestructure.Persistence;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -7,7 +6,7 @@ using BCrypt.Net;
 
 namespace CobrosAutomaticosApi.Infraestructure.Repositories
 {
-    public class AuthenticationRepository: IAuthenticationRespository
+    public class AuthenticationRepository
     {
         private readonly ConnexionDB _db;
         public AuthenticationRepository(ConnexionDB db)
