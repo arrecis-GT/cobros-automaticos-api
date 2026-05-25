@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
-using CobrosAutomaticosApi.Infraestructure.Repositories; // Asegúrate de que este namespace sea el correcto para tu repositorio
+using CobrosAutomaticosApi.Infraestructure.Repositories;
 
 namespace CobrosAutomaticosApi.Infraestructure.Persistence.Filters
 {
@@ -53,8 +50,12 @@ namespace CobrosAutomaticosApi.Infraestructure.Persistence.Filters
                 return;
             }
 
+            // Zona Horaria de Guatemala (Central America)
+            TimeZoneInfo guatemalaZone = TimeZoneInfo.FindSystemTimeZoneById("Central America Standard Time");
+            DateTime horaGuate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, guatemalaZone);
+
             // 4. Validar que la sesión pertenezca al día actual
-            var fechaActual = DateOnly.FromDateTime(DateTime.Now);
+            var fechaActual = DateOnly.FromDateTime(horaGuate);
             if (sesion.FechaCreacion != fechaActual)
             {
                 context.Result = new UnauthorizedObjectResult(new { message = "La sesión ha expirado, ingrese nuevamente." });
@@ -63,7 +64,7 @@ namespace CobrosAutomaticosApi.Infraestructure.Persistence.Filters
 
             // 5. Validar el TimeOut por inactividad (Hora actual vs Última Conexión)
             int timeOutSegundos = _config.GetValue<int>("Session:TimeOut");
-            var horaActual = TimeOnly.FromDateTime(DateTime.Now);
+            var horaActual = TimeOnly.FromDateTime(horaGuate);
 
             TimeSpan tiempoInactividad = horaActual - sesion.UltimaConexion;
 
@@ -72,6 +73,9 @@ namespace CobrosAutomaticosApi.Infraestructure.Persistence.Filters
                 context.Result = new UnauthorizedObjectResult(new { message = "La sesión ha expirado, ingrese nuevamente." });
                 return;
             }
+
+            // 6. Si todo es válido se actualizar la hora de última conexión en la base de datos
+            await _repository.UpdateLastConnection(userName);
         }
     }
 }
