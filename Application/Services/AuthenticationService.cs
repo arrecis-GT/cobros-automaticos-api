@@ -62,16 +62,19 @@ namespace CobrosAutomaticosApi.Application.Services
             }
 
             // Se valida si el usuario tiene una sesión activa
-            var activeSession = await _repository.CheckExistSession(Request.UserName);
+            var activeSession = await _repository.CheckExistSession(UserFind.UserName);
 
             if(activeSession == null)
             {
-                // Generar sesion activa
+                
+                // Generar sesion
+                var tokenJwt = GenerarJwt(UserFind.UserName);
+                await _repository.CreateSession(UserFind.UsuarioId, tokenJwt);
 
                 return new LoginResponse
                 {
                     UserName = UserFind.UserName,
-                    Token = GenerarJwt(UserFind.UserName),
+                    Token = tokenJwt,
                     StatusCode = 200,
                 };
 

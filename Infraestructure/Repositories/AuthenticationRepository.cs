@@ -22,6 +22,7 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
             using var connection = await _db.GetConnectionAsync();
             const string query = @"
                 SELECT  
+                       usuario_id,
                        username, 
                        password 
                 FROM Usuario 
@@ -37,6 +38,7 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
             {
                 return new Usuario
                 {
+                    UsuarioId = Convert.ToInt32(reader["usuario_id"]),
                     UserName = reader["username"].ToString(),
                     Password = reader["password"].ToString()
                 };
@@ -79,6 +81,20 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
             return null;
         }
 
+        public async Task<bool> CreateSession(int UserId, string Token)
+        {
+            using var connection = await _db.GetConnectionAsync();
+            const string query = @"
+                INSERT INTO Sesion 
+                    (usuario_id, token, fecha_creacion, hora_creacion, ultima_conexion, status)
+                VALUES (@UserId, @Token, GETDATE(), GETDATE(), GETDATE(), 'A')";
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.Add(new SqlParameter("@UserId", SqlDbType.Int) { Value = UserId });
+            command.Parameters.Add(new SqlParameter("@Token", SqlDbType.NVarChar) { Value = Token });
+            await command.ExecuteNonQueryAsync();
+
+            return true;
+        }
 
     }
 }

@@ -30,7 +30,7 @@ namespace CobrosAutomaticosApi.Presentation.Controllers
 
             if (response.StatusCode == 302)
             {
-                response.Message = "El usuario ya tiene una sesión activa";
+                response.Message = "El usuario ya se encuentra conectado";
                 return StatusCode(response.StatusCode, response);
             }
 
