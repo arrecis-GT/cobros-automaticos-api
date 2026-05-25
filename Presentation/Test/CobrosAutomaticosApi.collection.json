@@ -94,7 +94,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"UsuarioId\": \"1\",\r\n    \"CobrosId\": \"2\"\r\n}",
+              "raw": "{\r\n    \"UsuarioId\": \"1\",\r\n    \"CobroId\": \"2\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
