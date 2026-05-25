@@ -32,13 +32,23 @@ dotnet restore
 ## Pasos para ejecutar la API
 
 ```python
-# 1. Compilar el proyecto
+# 1. Ejecutar el script para restaurar/generar la base de datos
+cobros-automaticos-api/Infraestructure/Persistence/Restoration/database.sql
+
+# 2. Ejecutar el script para insertar datos de prueba
+cobros-automaticos-api/Infraestructure/Persistence/Restoration/dataset.sql
+
+# 3. Ejecutar el scripts para restaurar/generar procedimientos almacenados
+cobros-automaticos-api/Infraestructure/Persistence/Restoration/sp-cobro-individual.sql
+cobros-automaticos-api/Infraestructure/Persistence/Restoration/sp-cobro-lote.sql
+
+# 4. Compilar el proyecto
 dotnet build
 
-# 2. Ejecutar la API
+# 5. Ejecutar la API
 dotnet run
 
-# 3. Validar la ejecución del proyecto
+# 6. Validar la ejecución del proyecto
 Ej: http://localhost:5148
 ```
 
@@ -184,6 +194,8 @@ Ej: http://localhost:5148
 * **Arquitectura Relacional:** Se optó por una base de datos relacional `(Microsoft SQL Server)`. A diferencia de las `NoSQL`, el esquema relacional está altamente optimizado para manejar de forma segura operaciones transaccionales a gran escala, como lo son los procesamiento de cobros individuales y por lotes `(idempotente)`.
 
 * **Integridad Transaccional:** Se garantiza la integridad de datos mediante el uso de `COMMIT` y `ROLLBACK` en las transacciones.
+
+* **Uso de procedimientos almacenados:** Se toma la decisión de utilizar procedimientos almacenados  `SP_ProcesarCobroLote` y  `SP_ProcesarCobroIndividual` , para tener un mejor control del procesamiento de cobros individuales y por lotes, a su vez que también es más optimo.
 
 * **Desarrollo sin Frameworks ORM:** No se implementó un Framework ORM. Ya que la idea es dar visibilidad de los procesos a nivel de `T-SQL`.
 
