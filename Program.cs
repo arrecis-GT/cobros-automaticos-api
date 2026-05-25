@@ -1,7 +1,11 @@
 using CobrosAutomaticosApi.Application.Interfaces;
 using CobrosAutomaticosApi.Application.Services;
 using CobrosAutomaticosApi.Infraestructure.Persistence;
+using CobrosAutomaticosApi.Infraestructure.Persistence.Filters;
 using CobrosAutomaticosApi.Infraestructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +24,28 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ICobroService, CobroService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:SecretKey"]!)),
+        ValidateIssuer = false, 
+        ValidateAudience = false,
+        ValidateLifetime = true
+    };
+});
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidateSessionFilter>();
+});
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
