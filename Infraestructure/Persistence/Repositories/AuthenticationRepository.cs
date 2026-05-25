@@ -84,13 +84,20 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
         public async Task<bool> CreateSession(int UserId, string Token)
         {
             using var connection = await _db.GetConnectionAsync();
+
+            TimeZoneInfo guatemalaZone = TimeZoneInfo.FindSystemTimeZoneById("Central America Standard Time");
+            DateTime horaGuate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, guatemalaZone);
+
             const string query = @"
                 INSERT INTO Sesion 
                     (usuario_id, token, fecha_creacion, hora_creacion, ultima_conexion, status)
-                VALUES (@UserId, @Token, GETDATE(), GETDATE(), GETDATE(), 'A')";
+                VALUES 
+                    (@UserId, @Token, @FechaActual, @HoraActual, @HoraActual, 'A')";    
             using var command = new SqlCommand(query, connection);
             command.Parameters.Add(new SqlParameter("@UserId", SqlDbType.Int) { Value = UserId });
             command.Parameters.Add(new SqlParameter("@Token", SqlDbType.NVarChar) { Value = Token });
+            command.Parameters.Add(new SqlParameter("@FechaActual", SqlDbType.Date) { Value = horaGuate.Date });
+            command.Parameters.Add(new SqlParameter("@HoraActual", SqlDbType.Time) { Value = horaGuate.TimeOfDay });
             await command.ExecuteNonQueryAsync();
 
             return true;
