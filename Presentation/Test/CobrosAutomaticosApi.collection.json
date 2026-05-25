@@ -1,0 +1,321 @@
+{
+  "info": {
+    "_postman_id": "7d6d04a0-6fbf-49e4-b7ea-1497406a8824",
+    "name": "CobrosAutomaticosApi",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55066209",
+    "_collection_link": "https://go.postman.co/collection/55066209-7d6d04a0-6fbf-49e4-b7ea-1497406a8824?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "LogIn",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"UserName\": \"admin\",\r\n    \"PassWord\": \"12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7148/api/authentication/LogIn",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7148",
+              "path": [
+                "api",
+                "authentication",
+                "LogIn"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cobro",
+      "item": [
+        {
+          "name": "Crear Cobro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmJmIjoxNzc5NjcyMDg3LCJleHAiOjE3Nzk2NzkyODcsImlhdCI6MTc3OTY3MjA4N30.bMAcBnH6QxJg3LFDBsB2UgqCVihX_wUAlgWdmKlImHw",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"ClienteId\": 1,\r\n    \"Monto\": 10.00,\r\n    \"Moneda\": \"QTZ\",\r\n    \"ReferenciaExterna\": \"QTZ-2029\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7148/api/cobro/CrearCobro",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7148",
+              "path": [
+                "api",
+                "cobro",
+                "CrearCobro"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Procesar Cobro Individual",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmJmIjoxNzc5NjcyMDg3LCJleHAiOjE3Nzk2NzkyODcsImlhdCI6MTc3OTY3MjA4N30.bMAcBnH6QxJg3LFDBsB2UgqCVihX_wUAlgWdmKlImHw",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"UsuarioId\": \"1\",\r\n    \"CobrosId\": \"2\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7148/api/cobro/individual/procesar",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7148",
+              "path": [
+                "api",
+                "cobro",
+                "individual",
+                "procesar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Procesar Cobro Lote",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmJmIjoxNzc5NjcyMDg3LCJleHAiOjE3Nzk2NzkyODcsImlhdCI6MTc3OTY3MjA4N30.bMAcBnH6QxJg3LFDBsB2UgqCVihX_wUAlgWdmKlImHw",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"UsuarioId\": \"1\",\r\n    \"CobroIds\": [1,2,3,4]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7148/api/cobro/lote/procesar",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7148",
+              "path": [
+                "api",
+                "cobro",
+                "lote",
+                "procesar"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cliente",
+      "item": [
+        {
+          "name": "Crear Cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmJmIjoxNzc5NjcyMDg3LCJleHAiOjE3Nzk2NzkyODcsImlhdCI6MTc3OTY3MjA4N30.bMAcBnH6QxJg3LFDBsB2UgqCVihX_wUAlgWdmKlImHw",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"Dpi\": \"2541893450101\",\r\n    \"Email\": \"email@email.com\",\r\n    \"Nombre\": \"Nombre del cliente\",\r\n    \"Telefono\": \"22222222\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7148/api/cliente/CrearClient",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7148",
+              "path": [
+                "api",
+                "cliente",
+                "CrearClient"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Cobros por cliente",
+          "request": {
+            "auth": {
+              "type": "jwt",
+              "jwt": [
+                {
+                  "key": "payload",
+                  "value": "",
+                  "type": "string"
+                },
+                {
+                  "key": "secret",
+                  "value": "",
+                  "type": "string"
+                },
+                {
+                  "key": "algorithm",
+                  "value": "HS256",
+                  "type": "string"
+                },
+                {
+                  "key": "isSecretBase64Encoded",
+                  "value": false,
+                  "type": "boolean"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "headerPrefix",
+                  "value": "Bearer",
+                  "type": "string"
+                },
+                {
+                  "key": "queryParamKey",
+                  "value": "token",
+                  "type": "string"
+                },
+                {
+                  "key": "header",
+                  "value": "{}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmJmIjoxNzc5NjcyNzgzLCJleHAiOjE3Nzk2Nzk5ODMsImlhdCI6MTc3OTY3Mjc4M30.n2aBZB9GRFaPJJvW4g2_xzyKBG-PJnirxyJ7mKh6P1I",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7148/api/cliente/1/cobros",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7148",
+              "path": [
+                "api",
+                "cliente",
+                "1",
+                "cobros"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": null,
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Cobros por cliente y rango de fecha",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmJmIjoxNzc5NjcyMDg3LCJleHAiOjE3Nzk2NzkyODcsImlhdCI6MTc3OTY3MjA4N30.bMAcBnH6QxJg3LFDBsB2UgqCVihX_wUAlgWdmKlImHw",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7148/api/cliente/2/cobros?FechaInicio=2026-05-18&FechaFin=2026-05-22",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7148",
+              "path": [
+                "api",
+                "cliente",
+                "2",
+                "cobros"
+              ],
+              "query": [
+                {
+                  "key": "FechaInicio",
+                  "value": "2026-05-18"
+                },
+                {
+                  "key": "FechaFin",
+                  "value": "2026-05-22"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
