@@ -15,8 +15,6 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
             _db = db;
         }
 
-
-
         public async Task<Usuario> GetUserByUserName(string UserName)
         {
             using var connection = await _db.GetConnectionAsync();
@@ -102,6 +100,31 @@ namespace CobrosAutomaticosApi.Infraestructure.Repositories
 
             return true;
         }
+
+        public async Task UpdateLastConnection(string userName)
+        {
+            using var connection = await _db.GetConnectionAsync();
+
+            TimeZoneInfo guatemalaZone = TimeZoneInfo.FindSystemTimeZoneById("Central America Standard Time");
+            DateTime horaGuate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, guatemalaZone);
+            TimeOnly horaActual = TimeOnly.FromDateTime(horaGuate);
+
+            const string query = @"
+            UPDATE S
+                SET S.ultima_conexion = @HoraActual
+            FROM Sesion S
+            INNER JOIN Usuario U ON S.usuario_id = U.usuario_id
+            WHERE U.username = @UserName 
+            AND S.status = 'A'";
+
+            using var command = new SqlCommand(query, connection);
+
+            command.Parameters.Add(new SqlParameter("@UserName", SqlDbType.NVarChar) { Value = userName });
+            command.Parameters.Add(new SqlParameter("@HoraActual", SqlDbType.Time) { Value = horaActual.ToTimeSpan() });
+
+            await command.ExecuteNonQueryAsync();
+        }
+
 
     }
 }
